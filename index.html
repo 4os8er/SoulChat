@@ -1,20 +1,69 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A 💗 A</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#09090d" />
+  <meta name="description" content="A private space for two souls." />
+  <title>SoulChat — A private world for two</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="box">
-    <h1>Welcome to Our Website!</h1>
-    <p>Ya sirf Apki ❤️ Mare private duniya ha (😘).</p>
-    <input type="text" placeholder="Username">
-    <br><br>
-    <input type="password" required autocomplete="on" placeholder="Password">
-    <br><br>
-    <button type="submit">Login</button>
-    </div>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <main id="app" class="app-shell">
+    <section id="auth-screen" class="auth-screen">
+      <div class="auth-card glass">
+        <div class="brand-mark">s<span>♡</span></div>
+        <p class="eyebrow">A PRIVATE WORLD FOR TWO</p>
+        <h1>Somewhere<br><em>only we know.</em></h1>
+        <p class="auth-copy">A quiet little space for your conversations, moments, and memories.</p>
+        <form id="login-form" class="auth-form">
+          <label>Email address<input id="email" type="email" autocomplete="username" placeholder="you@example.com" required></label>
+          <label>Password<input id="password" type="password" autocomplete="current-password" placeholder="Your password" required minlength="6"></label>
+          <button class="primary-btn" type="submit">Enter SoulChat <span>↗</span></button>
+        </form>
+        <p id="auth-message" class="hint" aria-live="polite">Private access · Two accounts only</p>
+        <p class="tiny-note">Your space. Your people. Your moments.</p>
+      </div>
+      <div class="auth-footer">MADE OF MOMENTS <span>✦</span> KEPT BETWEEN TWO</div>
+    </section>
+
+    <section id="chat-screen" class="chat-screen hidden">
+      <aside class="sidebar glass">
+        <div class="side-brand"><span class="brand-dot">s</span><span>SOULCHAT</span><button id="logout-btn" class="icon-btn logout" title="Sign out" aria-label="Sign out">↗</button></div>
+        <div class="side-label">YOUR SPACE</div>
+        <button class="conversation active"><span class="avatar avatar-a">♡</span><span class="conversation-copy"><b id="partner-name">Our conversation</b><small id="partner-status">Your private room</small></span><span class="online-dot"></span></button>
+        <div class="sidebar-bottom"><div class="privacy-seal">⌑ <span>PRIVATE BY DESIGN</span></div><p>Some things are better<br>kept between two.</p></div>
+      </aside>
+
+      <section class="conversation-panel glass">
+        <header class="chat-header">
+          <div class="partner">
+            <div class="avatar avatar-a">♡</div>
+            <div><h2 id="header-name">Our little world</h2><p><span class="status-dot"></span><span id="connection-status">Connecting securely…</span></p></div>
+          </div>
+          <div class="header-actions"><button id="theme-btn" class="icon-btn" aria-label="Toggle appearance" title="Toggle appearance">☼</button><button id="details-btn" class="icon-btn" aria-label="Conversation details" title="Conversation details">ⓘ</button></div>
+        </header>
+        <div class="welcome-strip"><span>✦</span> A little space for everything that matters <span>✦</span></div>
+        <div id="message-list" class="message-list" aria-live="polite">
+          <div class="empty-state"><div class="empty-orbit">♡</div><h3>Your story starts here.</h3><p>Send the first little hello.</p></div>
+        </div>
+        <div id="typing-indicator" class="typing-indicator hidden"><span></span><span></span><span></span><small>typing</small></div>
+        <form id="composer" class="composer">
+          <button type="button" id="attach-btn" class="attach-btn" title="Attach an image" aria-label="Attach an image">＋</button>
+          <input id="message-input" type="text" maxlength="4000" placeholder="Write something from the heart…" autocomplete="off" aria-label="Message">
+          <input id="file-input" type="file" accept="image/*" hidden>
+          <button type="submit" class="send-btn" aria-label="Send message">↑</button>
+        </form>
+        <div class="composer-foot"><span>Be here, be kind.</span><span>SOULCHAT <i>✦</i></span></div>
+      </section>
+      <aside id="details-panel" class="details-panel glass hidden"><button id="close-details" class="icon-btn close-details" aria-label="Close details">×</button><div class="details-art">♡</div><p class="eyebrow">THE TWO OF YOU</p><h3>A private little universe</h3><p class="details-copy">A space for honest words, shared smiles, and memories worth keeping.</p><div class="detail-line"><span>SPACE</span><b>Private conversation</b></div><div class="detail-line"><span>ACCESS</span><b>Authorized members only</b></div><div class="detail-line"><span>FEELING</span><b>Always a little closer ♡</b></div></aside>
+    </section>
+    <div id="toast" class="toast" role="status"></div>
+  </main>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
