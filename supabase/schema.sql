@@ -77,3 +77,26 @@ with check (sender_id=auth.uid() and public.is_conversation_member(conversation_
 -- Storage: create a PRIVATE bucket named chat-media in the dashboard.
 -- Storage policies should be added after creating the bucket; use conversation membership metadata
 -- or a server-side signed URL flow. Do not make private media publicly readable.
+
+
+-- Private storage access: create the chat-media bucket as PRIVATE first.
+create policy "Conversation members can upload chat media"
+on storage.objects for insert to authenticated
+with check (
+  bucket_id='chat-media'
+  and public.is_conversation_member(((storage.foldername(name))[1])::uuid)
+  and (storage.foldername(name))[2]=auth.uid()::text
+);
+create policy "Conversation members can read chat media"
+on storage.objects for select to authenticated
+using (
+  bucket_id='chat-media'
+  and public.is_conversation_member(((storage.foldername(name))[1])::uuid)
+);
+create policy "Owners can delete own chat media"
+on storage.objects for delete to authenticated
+using (
+  bucket_id='chat-media'
+  and (storage.foldername(name))[2]=auth.uid()::text
+  and public.is_conversation_member(((storage.foldername(name))[1])::uuid)
+);
