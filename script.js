@@ -58,11 +58,12 @@ $("attach-btn").addEventListener("click",()=>{if(!supabase||!currentUser||!CONFI
 $("file-input").addEventListener("change",async e=>{
   const file=e.target.files?.[0];if(!file)return;if(!file.type.startsWith("image/")){toast("Please choose an image file.");return}
   if(file.size>8*1024*1024){toast("Image must be smaller than 8 MB.");return}
-  const path=currentUser.id+"/"+crypto.randomUUID()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+  const path=CONFIG.conversationId+"/"+currentUser.id+"/"+crypto.randomUUID()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
   const {error}=await supabase.storage.from("chat-media").upload(path,file,{contentType:file.type,upsert:false});
   if(error){toast("Upload failed: "+error.message);return}
-  const {data}=supabase.storage.from("chat-media").getPublicUrl(path);
-  try{await sendMessage("", "image", data.publicUrl);toast("Image shared.")}catch(err){toast("Image uploaded but message failed: "+err.message)}
+  const {data:signed,error:signedError}=await supabase.storage.from("chat-media").createSignedUrl(path,60*60*24*7);
+  if(signedError){toast("Could not create a secure media link: "+signedError.message);return}
+  try{await sendMessage("", "image", signed.signedUrl);toast("Image shared.")}catch(err){toast("Image uploaded but message failed: "+err.message)}
   e.target.value="";
 });
 $("details-btn").addEventListener("click",()=>$("details-panel").classList.remove("hidden"));
